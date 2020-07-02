@@ -1,0 +1,10 @@
+{
+  "dest_bucket": "xxxxxx",
+  "chunk_size": 1073741824,
+  "backup": {
+    "directory": "/var/lib/postgresql/backup",
+    "file_pattern": "",
+    "dest_prefix": "myTardis/backup/",
+    "rotate_lvl": 7
+  }
+}

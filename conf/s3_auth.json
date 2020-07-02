@@ -1,0 +1,13 @@
+{
+  "src_endpoint": "https://a.b",
+  "src_s3_keys": {
+    "access_key_id": "xxxxxxxx",
+    "secret_access_key": "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"
+   },
+
+  "dest_endpoint": "https://c.d",
+  "dest_s3_keys": {
+    "access_key_id": "xxxxxxxx",
+    "secret_access_key": "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"
+  }
+}
