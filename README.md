@@ -1,15 +1,14 @@
 # s3rsyncdb
-Rsync db backups to S3.  
-Rotates db backup files, keeping the last "rotate_lvl" (non-zero) backup files
+Create postgres backup with pg_backup shell script, run from cron, as the postgres user.
+Rsync postgres db backups to S3 using s3rsyncdb.py.  
+s3rsyncdb.py rotates db backup files, keeping the last "rotate_lvl" (non-zero) backup files.
+S3 backups of the deleted files, are also deleted.
 
-* Requires an auth.json file, with the server urls, and keys
-* Requires a conf.json, with the destination bucket
+* Requires auth.json, with the server urls, and keys
+* Requires conf.json, with the destination bucket
 
-A file is copied to the S3 store if there is no correcsponding object at the destination; Or if the ETag fields differ. 
+A file is copied to the S3 store if there is no correcsponding object of the same size at the destination. The ETag of the file is calculated and compared with the uploaded object to ensure the copy was successful.
 
-Objects without a corresponding file in the source directory, are deleted from the S3 store.
-
-WARNING: files matching the backup pattern are sorted in reverse alphabetic order, and ones beyond the rotate_lvl limit are deleted!
 
 The ETag can be an AWS style multipart MD5, but it will only match if the source and destination objects where both uploaded with the same chunk size. This code assumes 1GiB (1073741824), to match the value used for uploading instrument data. Objects of size less than, or equal to the chunk size are uploaded without using chunks, so have a standard MD5 in the ETag.
 
@@ -29,6 +28,7 @@ optional arguments:
   -n, --no_rsync                    Use with Debugging. Default is to perform s3 rsync
   -c CONF_FILE, --conf CONF_FILE    Specify JSON conf file for source and destination
   -a AUTH_FILE, --auth AUTH_FILE    Specify JSON auth file containing s3 keys
+  --ls                              list backed up objects in the S3 store
 ```
 
 ## Configuration
@@ -52,7 +52,7 @@ optional arguments:
   "backup": {
     "directory": "/var/lib/postgresql/backup",
     "file_pattern": "dbs-[0-9][0-9][0-9][0-9]-[0-9][0-9]-[0-9][0-9].sql.gz",
-    "dest_prefix": "myTardis/backup/",
+    "dest_prefix": "myTardis/pg_backup",
     "rotate_lvl": 7
   }
 }
