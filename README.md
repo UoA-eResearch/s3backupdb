@@ -1,7 +1,7 @@
-# s3rsyncdb
+# s3backupdb
 Create postgres backup with pg_backup shell script, run from cron, as the postgres user.
 Rsync postgres db backups to S3 using s3rsyncdb.py.  
-s3rsyncdb.py rotates db backup files, keeping the last "rotate_lvl" (non-zero) backup files.
+s3backupdb.py rotates db backup files, keeping the last "rotate_lvl" (non-zero) backup files.
 S3 backups of the deleted files, are also deleted.
 
 * Requires auth.json, with the server urls, and keys
@@ -14,7 +14,7 @@ The ETag can be an AWS style multipart MD5, but it will only match if the source
 
 ## Help
 ```
-usage: s3rsyncdb.py [-h] [-?] [-d DEBUG_LVL] [-n] [-c CONF_FILE] [-a AUTH_FILE]
+usage: s3backupdb [-h] [-?] [-d DEBUG_LVL] [-n] [-c CONF_FILE] [-a AUTH_FILE]
 
 rsync from source s3 bucket to dest s3 bucket
 
